@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ProduitService } from '../../services/produit.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-produit-form',
-  templateUrl: './produit-form.component.html'
+  templateUrl: './produit-form.component.html',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class ProduitFormComponent implements OnInit {
 

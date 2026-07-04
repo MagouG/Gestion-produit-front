@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ProduitService } from '../../services/produit.service';
 import { Produit } from '../../models/produits';
 
 @Component({
   selector: 'app-produit-list',
-  templateUrl: "produit-list.component.html"
+  templateUrl: "produit-list.component.html",
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class ProduitListComponent implements OnInit {
 
