@@ -1,8 +1,8 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5167/api',
+  production: true,
+  apiUrl: '/api',
   keycloak: {
-    url: 'http://localhost:8180',
+    url: 'https://auth.mondomaine.com',
     realm: 'gestionproduits',
     clientId: 'gestionproduits-angular',
   },
