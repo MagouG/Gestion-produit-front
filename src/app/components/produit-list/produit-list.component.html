@@ -1,52 +1,56 @@
-<div class="container mt-4">
-
-    <h2>Liste des Produits</h2>
-
-    <a routerLink="/ajouter" class="btn btn-primary mb-3">
-        Ajouter
-    </a>
-
-    <table class="table table-bordered">
-
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr *ngFor="let produit of produits">
-
-                <td>{{produit.id}}</td>
-                <td>{{produit.nom}}</td>
-                <td>{{produit.description}}</td>
-                <td>{{produit.prix}}</td>
-                <td>{{produit.quantite}}</td>
-
-                <td>
-
-                    <a
-                      [routerLink]="['/modifier', produit.id]"
-                      class="btn btn-warning btn-sm me-2">
-                        Modifier
-                    </a>
-
-                    <button
-                      class="btn btn-danger btn-sm"
-                      (click)="supprimer(produit.id!)">
-                        Supprimer
-                    </button>
-
-                </td>
-
-            </tr>
-        </tbody>
-
-    </table>
-
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Produits</h1>
+    <p class="page-subtitle">Gérez votre catalogue de produits</p>
+  </div>
+  <a routerLink="/ajouter" class="btn btn-primary">+ Nouveau produit</a>
 </div>
+
+<div class="card" *ngIf="produits.length > 0; else empty">
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Description</th>
+          <th>Prix</th>
+          <th>Quantité</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produit of produits">
+          <td>{{ produit.id }}</td>
+          <td>{{ produit.nom }}</td>
+          <td>{{ produit.description }}</td>
+          <td><span class="badge-price">{{ produit.prix | number:'1.2-2' }} €</span></td>
+          <td>
+            <span class="badge-stock" [class.low]="produit.quantite < 5">
+              {{ produit.quantite }}
+            </span>
+          </td>
+          <td>
+            <div class="actions">
+              <a [routerLink]="['/modifier', produit.id]" class="btn btn-sm btn-secondary">
+                Modifier
+              </a>
+              <button class="btn btn-sm btn-danger" (click)="supprimer(produit.id!)">
+                Supprimer
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <p class="empty-title">Aucun produit</p>
+    <p class="empty-desc">Commencez par ajouter votre premier produit.</p>
+    <a routerLink="/ajouter" class="btn btn-primary">+ Ajouter un produit</a>
+  </div>
+</ng-template>

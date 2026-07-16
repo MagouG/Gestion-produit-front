@@ -10,24 +10,64 @@ import { CreateUser } from '../../models/user.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <h2>{{ isEdit ? 'Éditer' : 'Nouvel' }} utilisateur</h2>
-    <form (ngSubmit)="save()">
-      <label>Prénom <input name="firstName" [(ngModel)]="model.firstName" required /></label>
-      <label>Nom <input name="lastName" [(ngModel)]="model.lastName" required /></label>
-      <label>Email <input name="email" type="email" [(ngModel)]="model.email" required [disabled]="isEdit" /></label>
-      <label *ngIf="!isEdit">Mot de passe <input name="password" type="password" [(ngModel)]="model.password" required /></label>
-      <label>Rôle
-        <select name="role" [(ngModel)]="model.role">
-          <option value="User">User</option>
-          <option value="Admin">Admin</option>
-        </select>
-      </label>
-      <label>Département <input name="department" [(ngModel)]="model.department" /></label>
-      <div class="actions">
-        <button type="submit">Enregistrer</button>
-        <button type="button" (click)="cancel()">Annuler</button>
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">{{ isEdit ? 'Modifier un utilisateur' : 'Nouvel utilisateur' }}</h1>
+        <p class="page-subtitle">
+          {{ isEdit ? 'Modifiez les informations du compte' : 'Créez un nouveau compte utilisateur' }}
+        </p>
       </div>
-    </form>
+    </div>
+
+    <div class="card" style="max-width: 600px">
+      <div class="card-body" style="padding: 24px">
+        <form (ngSubmit)="save()">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input name="firstName" class="form-input" [(ngModel)]="model.firstName" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input name="lastName" class="form-input" [(ngModel)]="model.lastName" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input name="email" type="email" class="form-input"
+                   [(ngModel)]="model.email" required [disabled]="isEdit" />
+          </div>
+
+          <div class="form-group" *ngIf="!isEdit">
+            <label class="form-label">Mot de passe</label>
+            <input name="password" type="password" class="form-input"
+                   [(ngModel)]="model.password" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Rôle</label>
+              <select name="role" class="form-input" [(ngModel)]="model.role">
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Département</label>
+              <input name="department" class="form-input" [(ngModel)]="model.department" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
   `,
 })
 export class UserFormComponent implements OnInit {

@@ -1,62 +1,49 @@
-<div class="container mt-4">
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ id ? 'Modifier le produit' : 'Nouveau produit' }}</h1>
+    <p class="page-subtitle">
+      {{ id ? 'Modifiez les informations' : 'Remplissez les informations du nouveau produit' }}
+    </p>
+  </div>
+</div>
 
-    <h2>Produit</h2>
+<div class="card" style="max-width: 600px">
+  <div class="card-body" style="padding: 24px">
+    <form [formGroup]="produitForm" (ngSubmit)="save()">
 
-    <form [formGroup]="produitForm"
-          (ngSubmit)="save()">
+      <div class="form-group">
+        <label class="form-label">Nom du produit</label>
+        <input type="text" formControlName="nom"
+               class="form-input" placeholder="Ex : MacBook Pro 14">
+      </div>
 
-        <div class="mb-3">
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea formControlName="description"
+                  class="form-input" rows="3"
+                  placeholder="Description du produit..."></textarea>
+      </div>
 
-            <label>Nom</label>
-
-            <input
-              type="text"
-              formControlName="nom"
-              class="form-control">
-
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prix (€)</label>
+          <input type="number" formControlName="prix"
+                 class="form-input" placeholder="0.00" step="0.01">
         </div>
-
-        <div class="mb-3">
-
-            <label>Description</label>
-
-            <textarea
-              formControlName="description"
-              class="form-control">
-            </textarea>
-
+        <div class="form-group">
+          <label class="form-label">Quantité</label>
+          <input type="number" formControlName="quantite"
+                 class="form-input" placeholder="0">
         </div>
+      </div>
 
-        <div class="mb-3">
-
-            <label>Prix</label>
-
-            <input
-              type="number"
-              formControlName="prix"
-              class="form-control">
-
-        </div>
-
-        <div class="mb-3">
-
-            <label>Quantité</label>
-
-            <input
-              type="number"
-              formControlName="quantite"
-              class="form-control">
-
-        </div>
-
-        <button
-          class="btn btn-success"
-          type="submit">
-
-            Enregistrer
-
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+        <button type="submit" class="btn btn-primary">
+          {{ id ? 'Enregistrer les modifications' : 'Créer le produit' }}
         </button>
+      </div>
 
     </form>
-
+  </div>
 </div>

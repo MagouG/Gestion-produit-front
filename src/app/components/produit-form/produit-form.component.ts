@@ -75,4 +75,8 @@ export class ProduitFormComponent implements OnInit {
 
   }
 
+  cancel() {
+    this.router.navigate(['/']);
+  }
+
 }

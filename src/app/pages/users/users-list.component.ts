@@ -9,26 +9,61 @@ import { UserDto } from '../../models/user.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="header">
-      <h2>Utilisateurs (Admin)</h2>
-      <a routerLink="/users/nouveau">+ Nouvel utilisateur</a>
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Utilisateurs</h1>
+        <p class="page-subtitle">Gérez les comptes et leurs accès</p>
+      </div>
+      <a routerLink="/users/nouveau" class="btn btn-primary">+ Nouvel utilisateur</a>
     </div>
-    <table>
-      <thead><tr><th>Email</th><th>Nom</th><th>Rôle</th><th>Actif</th><th></th></tr></thead>
-      <tbody>
-        <tr *ngFor="let u of users()">
-          <td>{{ u.email }}</td>
-          <td>{{ u.firstName }} {{ u.lastName }}</td>
-          <td>{{ u.role }}</td>
-          <td>{{ u.isActive ? 'Oui' : 'Non' }}</td>
-          <td>
-            <a [routerLink]="['/users', u.id]">Éditer</a>
-            <button (click)="toggle(u)">{{ u.isActive ? 'Désactiver' : 'Activer' }}</button>
-            <button (click)="remove(u.id)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="card" *ngIf="users().length > 0; else empty">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Nom complet</th>
+              <th>Rôle</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users()">
+              <td>{{ u.email }}</td>
+              <td>{{ u.firstName }} {{ u.lastName }}</td>
+              <td>
+                <span class="role-badge" [class.admin]="u.role === 'Admin'">{{ u.role }}</span>
+              </td>
+              <td>
+                <span class="status-badge" [class.active]="u.isActive">
+                  {{ u.isActive ? 'Actif' : 'Inactif' }}
+                </span>
+              </td>
+              <td>
+                <div class="actions">
+                  <a [routerLink]="['/users', u.id]" class="btn btn-sm btn-secondary">Éditer</a>
+                  <button class="btn btn-sm btn-secondary" (click)="toggle(u)">
+                    {{ u.isActive ? 'Désactiver' : 'Activer' }}
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="remove(u.id)">Supprimer</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #empty>
+      <div class="empty-state">
+        <div class="empty-icon">👥</div>
+        <p class="empty-title">Aucun utilisateur</p>
+        <p class="empty-desc">Ajoutez un utilisateur pour commencer.</p>
+        <a routerLink="/users/nouveau" class="btn btn-primary">+ Nouvel utilisateur</a>
+      </div>
+    </ng-template>
   `,
 })
 export class UsersListComponent implements OnInit {
